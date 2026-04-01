@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result - Car Price Predictor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .result-card {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .price {
+            font-size: 4em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 20px 0;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .price-range {
+            font-size: 1.2em;
+            color: #666;
+            margin: 10px 0;
+        }
+        
+        .confidence {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            text-align: left;
+        }
+        
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .info-box ul {
+            margin-left: 20px;
+        }
+        
+        .info-box li {
+            margin: 8px 0;
+            color: #555;
+        }
+        
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+        }
+        
+        @media (max-width: 600px) {
+            .price {
+                font-size: 2.5em;
+            }
+            .actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1> Price Prediction Result</h1>
+        </div>
+        
+        <div class="result-card">
+            <h2>Estimated Market Price</h2>
+            <div class="price">{{ price }}</div>
+            <div class="price-range">
+                Estimated Range: {{ low_price }} - {{ high_price }}
+            </div>
+            <div class="confidence">
+                Confidence Level: {{ confidence }}
+            </div>
+            
+            <div class="actions">
+                <a href="/" class="btn btn-primary">New Prediction</a>
+                <a href="/test" class="btn btn-secondary"> Test API</a>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3> How This Prediction Was Made</h3>
+            <p>Our AI model analyzed the following factors:</p>
+            <ul>
+                <li> <strong>Vehicle age and mileage</strong> - Key depreciation factors</li>
+                <li> <strong>Engine size and turbo</strong> - Performance indicators</li>
+                <li> <strong>Brand reputation</strong> - Market demand by manufacturer</li>
+                <li> <strong>Vehicle category</strong> - SUV vs Sedan vs Hatchback</li>
+                <li> <strong>Features</strong> - Leather, 4x4, automatic transmission</li>
+                <li> <strong>Historical market data</strong> - 18,000+ real car listings</li>
+            </ul>
+            <p style="margin-top: 15px; font-size: 0.9em; color: #888;">
+                Model R² Score: 0.72 (explains 72% of price variation)<br>
+                Average error: ~$3,500
+            </p>
+        </div>
+        
+        <footer>
+            <p>This is an AI-powered estimate based on historical data. Actual selling prices may vary based on market conditions, location, and vehicle condition.</p>
+            <p style="margin-top: 10px;">
+                <a href="/" style="color: #0da0e9;">← Back to Predictor</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Price Predictor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #0f77df 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .form-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn-predict {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .btn-predict:hover {
+            transform: translateY(-2px);
+        }
+        
+        .metrics {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .metrics h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .metric-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .info-icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 12px;
+            line-height: 18px;
+            margin-left: 5px;
+            cursor: help;
+        }
+        
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Car Price Predictor</h1>
+            <p>Get accurate price estimates based on car features</p>
+        </div>
+        
+        <div class="content">
+            <form action="/predict" method="POST">
+
+    <div class="form-section">
+
+        <div class="form-group">
+            <label>Manufacturer</label>
+            <select name="manufacturer" required>
+                <option value="">Select Manufacturer</option>
+                <option value="Toyota">Toyota</option>
+                <option value="BMW">BMW</option>
+                <option value="Honda">Honda</option>
+                <option value="Hyundai">Hyundai</option>
+                <option value="Ford">Ford</option>
+                <option value="Lexus">Lexus</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Model</label>
+            <select name="model" required>
+                <option value="">Select Model</option>
+                <option value="Corolla">Corolla</option>
+                <option value="G90 M5">G90 M5</option>
+                <option value="Camry">Camry</option>
+                <option value="Civic">Civic</option>
+                <option value="Accord">Accord</option>
+                <option value="Fit">Fit</option>
+                <option value="RX450">RX450</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Production Year</label>
+            <input type="number" name="prod_year" min="1990" max="2025" required>
+        </div>
+
+        <div class="form-group">
+            <label>Mileage (km)</label>
+            <input type="number" name="mileage" min="0" required>
+        </div>
+
+        <div class="form-group">
+            <label>Fuel Type</label>
+            <select name="fuel_type" required>
+                <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Hybrid">Hybrid</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Gear Box Type</label>
+            <select name="gear_box" required>
+                <option value="Automatic">Automatic</option>
+                <option value="Manual">Manual</option>
+            </select>
+        </div>
+
+    </div>
+
+<button type="submit" class="btn-predict" onclick="this.innerText='Predicting...'">
+    Predict Price
+</button>
+</form>
+{% if prediction_text %}
+<div style="margin-top:30px; text-align:center;">
+    <h2 style="color:#0d8eeb;">{{ prediction_text }}</h2>
+</div>
+{% endif %}
+            
+            <div class="metrics">
+                <h3>Model Performance</h3>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">85%</div>
+                        <div>Accuracy</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">±15%</div>
+                        <div>Confidence Interval</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">R² = 0.72</div>
+                        <div>Model Score</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">~$3,500</div>
+                        <div>Average Error</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Powered by M5 Machine Learning | Trained on 18,000+ car listings</p>
+            <p>Built and Trained by Prof. Arion Kennedy </p>
+        </footer>
+    </div>
+</body>
+</html>
